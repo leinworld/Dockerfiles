@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 RUN apt update && \
-    apt upgrade && \
+    apt upgrade -y && \
     apt install -y openssh-server sudo net-tools && \
     mkdir -p /run/sshd && \ 
     useradd -m --shell /bin/bash ubuntu && \
