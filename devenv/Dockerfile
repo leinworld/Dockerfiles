@@ -3,12 +3,15 @@ RUN apt update && \
     apt upgrade -y && \
     apt install -y sudo net-tools nodejs curl python3 git && \
     curl -fsSL https://code-server.dev/install.sh | sh && \
-    mkdir -p /code
+    useradd -m --shell /bin/bash codeuser && \
+    echo "codeuser:leinworld" | chpasswd
 
-WORKDIR /code
-ENV HOME=/code \
-    XDG_CONFIG_HOME=/code/.config \
-    XDG_DATA_HOME=/code/.local/share
+USER codeuser
+WORKDIR /home/codeuser
+
+ENV HOME=/home/codeuser \
+    XDG_CONFIG_HOME=/home/codeuser/.config \
+    XDG_DATA_HOME=/home/codeuser/.local/share
 
 # for code-server
 EXPOSE 8080
