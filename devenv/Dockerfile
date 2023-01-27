@@ -1,13 +1,15 @@
 FROM ubuntu:latest
 RUN apt update && \
     apt upgrade -y && \
-    apt install -y sudo net-tools nodejs curl python3 git && \
+    apt install -y sudo net-tools nodejs curl python3 git openssh-server mkcert vim && \
     curl -fsSL https://code-server.dev/install.sh | sh && \
+    mkdir -p /run/sshd && \
     mkdir /docker-scripts
 
 ENV PUID=1000 \
     PGID=1000 \
-    USERNAME=codeuser
+    USERNAME=codeuser \
+    PASSWD=ubuntu
 
 COPY ["entrypoint.sh", "/docker-scripts/entrypoint.sh"]
 # for code-server
