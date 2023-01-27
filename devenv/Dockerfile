@@ -3,20 +3,18 @@ RUN apt update && \
     apt upgrade -y && \
     apt install -y sudo net-tools nodejs curl python3 git && \
     curl -fsSL https://code-server.dev/install.sh | sh && \
-    useradd -m --shell /bin/bash codeuser && \
-    echo "codeuser:leinworld" | chpasswd
+    mkdir /docker-scripts
 
-USER codeuser
-WORKDIR /home/codeuser
+ENV PUID=1000 \
+    PGID=1000 \
+    USERNAME=codeuser
 
-ENV HOME=/home/codeuser \
-    XDG_CONFIG_HOME=/home/codeuser/.config \
-    XDG_DATA_HOME=/home/codeuser/.local/share
-
+COPY ["entrypoint.sh", "/docker-scripts/entrypoint.sh"]
 # for code-server
 EXPOSE 8080
 
 # for web-server
 EXPOSE 8888
 
+ENTRYPOINT ["/docker-scripts/entrypoint.sh"]
 CMD ["code-server"]
