@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 RUN apt update && \
     apt upgrade -y && \
-    apt install -y sudo net-tools nodejs curl python3 git openssh-server mkcert vim && \
+    apt install -y sudo net-tools nodejs curl python3 git openssh-server mkcert vim npm && \
     curl -fsSL https://code-server.dev/install.sh | sh && \
     mkdir -p /run/sshd && \
     mkdir /docker-scripts
